@@ -34,7 +34,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    UIViewController *profileVC = [self.viewControllerFactory userProfileViewControllerForUserProfile:nil];
+    [self embedChildViewController:profileVC];
+    
+    if (!_dataService.userProfile) {
+        [_dataService fetchUserProfile:^(UserProfile *profile, NSError *error) {
+            //TODO
+        }];
+    }
 }
 
 #pragma mark - Helpers
