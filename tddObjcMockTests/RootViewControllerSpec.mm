@@ -4,14 +4,15 @@
 #import "UserProfile.h"
 #import "ViewControllerFactory.h"
 #import "UserProfileViewController.h"
-#import "SwuMockDataService.h"
+#import "MockDataService.h"
 
 
 @interface MockUserProfileViewController : UserProfileViewController
+@property (nonatomic, strong) UserProfile *lastestUpdatedProfile;
 @end
 @implementation MockUserProfileViewController
 - (void)updateWithUserProfile:(UserProfile *)userProfile {
-    // do nothing
+    self.lastestUpdatedProfile = userProfile;
 }
 @end
 
@@ -60,15 +61,13 @@ describe(@"Loading screen", ^{
 
 describe(@"Displaying user info", ^{
     __block RootViewController *subject;
-    __block DataService *dataService;
+    __block MockDataService *dataService;
     __block ViewControllerFactory *vcFactory;
-    __block UIViewController *userProfileViewController;
+    __block MockUserProfileViewController *userProfileViewController;
     
     beforeEach(^{
-        dataService = nice_fake_for(DataService.class);
-        
-        userProfileViewController = [[UIViewController alloc] init];
-        
+        dataService = [[MockDataService alloc] init];
+        userProfileViewController = [[MockUserProfileViewController alloc] init];
         vcFactory = fake_for(ViewControllerFactory.class);
         vcFactory stub_method(@selector(userProfileViewControllerForUserProfile:))
             .and_return(userProfileViewController);
@@ -83,13 +82,14 @@ describe(@"Displaying user info", ^{
         subject.view.subviews should contain(userProfileViewController.view);
     });
     describe(@"upon completion of user profile fetch", ^{
-        // __block UserProfile *fetchedUserProfile;
-        
+        __block UserProfile *userProfile;
         beforeEach(^{
-            
+            userProfile = [UserProfile new];
+            dataService.latestCallback(userProfile, nil);
         });
         it(@"should update the user profile view controller when data returns", ^{
-            
+//            subject.userProfileViewController.userProfile should equal(userProfile);
+            userProfileViewController.lastestUpdatedProfile should equal(userProfile);
         });
     });
 });

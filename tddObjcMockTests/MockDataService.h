@@ -10,4 +10,8 @@
 
 @interface MockDataService : DataService
 
+@property (nonatomic, strong, readwrite) UserProfile *mockUserProfile;
+
+@property (nonatomic, copy) FetchHandler latestCallback;
+
 @end

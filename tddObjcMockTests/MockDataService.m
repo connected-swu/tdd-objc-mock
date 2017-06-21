@@ -10,4 +10,10 @@
 
 @implementation MockDataService
 
+
+- (void)fetchUserProfile:(FetchHandler)handler {
+//    handler(self.mockUserProfile, nil);
+    self.latestCallback = handler;
+}
+
 @end

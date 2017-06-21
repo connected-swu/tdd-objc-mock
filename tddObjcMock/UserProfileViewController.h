@@ -11,5 +11,6 @@
 
 
 @interface UserProfileViewController : UIViewController
+//@property (nonatomic, strong) UserProfile *userProfile;
 - (void)updateWithUserProfile:(UserProfile *)userProfile;
 @end

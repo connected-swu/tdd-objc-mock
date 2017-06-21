@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 #import "DataService.h"
 #import "ViewControllerFactory.h"
-#import "UserProfileViewController.h"
 
 
 @interface RootViewController ()
@@ -37,10 +36,12 @@
     
     UIViewController *profileVC = [self.viewControllerFactory userProfileViewControllerForUserProfile:nil];
     [self embedChildViewController:profileVC];
+    self.userProfileViewController = (id)profileVC;
     
     if (!_dataService.userProfile) {
         [_dataService fetchUserProfile:^(UserProfile *profile, NSError *error) {
-            //TODO
+//            self.userProfileViewController.userProfile = profile;
+            [self.userProfileViewController updateWithUserProfile:profile];
         }];
     }
 }

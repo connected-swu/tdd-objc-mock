@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UserProfileViewController.h"
 
 @class DataService;
 @class ViewControllerFactory;
 
-
 @interface RootViewController : UIViewController
+//@property (nonatomic, strong) UserProfileViewController *userProfileViewController;
 + (instancetype)withDataService:(DataService *)dataService
           viewControllerFactory:(ViewControllerFactory *)viewControllerFactory;
 @end
